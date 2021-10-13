@@ -14,7 +14,11 @@ const start = () => {
   bot.on("message", async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
-
+    const message = msg.message_id;
+    const userId = msg.from.id;
+    setTimeout(() => {
+      return bot.unbanChatMember(chatId, userId);
+    }, 180000);
     if (text === "да, мне есть 18!") {
       return bot.sendMessage(
         chatId,
@@ -27,6 +31,9 @@ const start = () => {
         }
       );
     } else if (text === "Нет, мне еще нету 18!") {
+      setTimeout(() => {
+        return bot.deleteMessage(chatId, message);
+      }, 1000);
       return bot.sendMessage(
         chatId,
         "Извини,до новых встреч,когда наступит твое совершеннолетия)",
@@ -89,7 +96,6 @@ const start = () => {
       chatId,
       "Я только учусь и не понял что ты мне хотел сказать"
     );
-    
   });
 };
 
